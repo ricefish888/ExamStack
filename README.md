@@ -91,103 +91,6 @@
 
 ## 3 更新说明
 
-1. 管理后台现在独立成一个新项目，不再和第一版一样和前台合在一起。
-1. 引入RabbitMq，用于接受用户提交的答题卡，通过ScoreMarker从消息队列获取答题卡并交卷。
-1. 试题内容存储格式由xml改为json
-1. 增加教师功能，现在教师用户可以正确地使用自己的权限管理学员、试题、试卷、考试以及培训。 
-1.#ExamStack V2.0部署文档
-
-----
-
-## 1 概述
-
-### 1.1 简介
-
-在`Exam++`考试系统第一版的基础上，我们对`ExamStack V2.0`进行了大量代码重构，同时也对数据模型做了部分调整。为了减小学员考试交卷时大量并发带来的系统风险，我们尝试采用成熟的消息队列框架RabbitMQ来解决这一问题，因此我们的数据库以及系统的架构同第一版相比，发生了不小的变化。
-
-### 1.2 部署要点
-
-1. `Management.war`和`Portal.war`需要部署在`同一个目录`下。
-
-1. ExamStack V2.0增加了`培训功能`，因为需要保存培训材料，所以请留出足够的磁盘空间（以实际需要为准）。
-
-1. 要保证RabbitMQ服务状态为`运行状态`。
-
-1. 要保证ScoreMarker状态为`运行状态`，同时ScoreMarker调用服务地址要配置正确。
-
-## 2 应用服务器安装配置
-
-### 2.1 服务器安装部署
-
-#### 2.1.1 服务器配置
-
-- 操作系统：Linux、Windows
-	
-- 内存：最低2G，推荐8G
-
-#### 2.1.2 java运行环境
-
-- Java 8
-
-#### 2.1.3 服务器
-
-- Tomcat 8
-
-- RabbitMQ
-
-- MySql 5.0以上
-
-### 2.2 应用部署
-
-#### 2.2.1 数据库
-
-1. 在MySql中新建一个数据库`examstack`，字符集使用`utf8 -- UTF-8 Unicode`
-
-1. 使用我们提供的`examstack.sql`还原`examstack`
-
-1. 设置好对应的访问权限
-
-#### 2.2.2 RabbitMQ
-
-1. 安装最新版本的RabbitMQ，具体安装方法，在网络上可以找到很多。
-
-1. 配置
-
-#### 2.2.3 应用
-
-1. 将`Management.war`和`Portal.war`放到Tomcat应用程序目录（`webapps`）下。
-	
-1. 启动Tomcat，webapps目录下会生成两个文件夹（`Management`和`Portal`）。
-	
-1. 分别进入到`Management/WEB-INF/Spring`和`Portal/WEB-INF/Spring`下修改`root-context.xml`文件,将数据库地址、用户名和密码修改成正确的内容。修改完成后重启tomcat服务器。
-
-	*需要修改的内容如下:*
-	
-	```	
-	<property name="jdbcUrl" value="jdbc:mysql:/*.*.*.*:3306/examstack?useUnicode=true&amp;characterEncoding=UTF-8" />
-	<property name="user" value="root" />
-	<property name="password" value="***" />
-	```	
-
-1. 访问`http://localhost:8080/Management`和`http://localhost:8080/Portal`可以进入到管理后台页面和学员页面，并可以正常登陆，则应用配置成功。
-
-	**注意**：*在完成这一步后学员考试交卷无法完成,需要部署`ScoreMarker`。*
-	
-1. 部署ScoreMarker
-	
-    Linux下
-	解压scoreMarker到/opt/目录。
-	确认config/scoremarker.properties文件配置正确。
-	拷贝scoremarker 执行脚本到init.d目录下并检查脚本中的配置。
-
-	Windows下
-	解压scoreMarker到任意目录。
-	确认config/scoremarker.properties文件配置正确。
-	修改installService.bat中APP_HOME为scoreMarker目录。
-    运行installService.bat后启动服务ScoreMarkerService服务。
-
-## 3 更新说明
-
 **系统架构**
 
 1. 管理后台现在独立成一个新项目，不再和第一版一样和前台合在一起。
@@ -270,4 +173,5 @@
 	> 我们在测试过程中发现，内存不足的情况下（我们使用的是1G内存），RabbitMQ、MySql、ScoreMarker经常被Kill，而且无法启动，查看日志会发现提示内存不够。
 	
 	查看下日志，如果是内存不够的原因，那就赶紧加内存吧。为了保证系统正常运行，内存不能低于2G。
+
 
