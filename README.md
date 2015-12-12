@@ -148,30 +148,3 @@
 	查看下日志，如果是内存不够的原因，那就赶紧加内存吧。为了保证系统正常运行，内存不能低于2G。
 
 
-## 4 系统问题处理
-
-1. **不能获得数据库连接**
-
-	> Cause:org.springframework.jdbc.CannotGetJdbcConnectionException:Could not get JDBC Connection;nested exception is java.sql.SQLException:Access denied for user 'root'@'localhost'
-	
-	请检查数据库连接字符串是否正确，同时检查数据库名、用户名和密码是否设置正确。
-
-1. **交卷失败**
-	
-	> `RabbitMQ`没有启动会导致应用程序连接`RabbitMQ`失败
-	
-	请检查`RabbitMQ`服务是否启动。
-
-1. **学员交卷后，管理界面学员对应的状态没有改变**
-
-	> 交卷成功后，学员考试状态会修改成`已交卷`或者`已阅卷`，如果在提示“交卷成功”后没有发生任何变化，证明ScoreMarker没有正常启动或者ScoreMarker调用接口失败。
-	
-	请检查ScoreMarker是否启动。同时请保证ScoreMarker能调用到Management提供的接口，这一点在ScoreMarker部署中已经说明。
-
-1. **RabbitMQ、MySql、ScoreMarker无法启动或经常被Kill掉**
-
-	> 我们在测试过程中发现，内存不足的情况下（我们使用的是1G内存），RabbitMQ、MySql、ScoreMarker经常被Kill，而且无法启动，查看日志会发现提示内存不够。
-	
-	查看下日志，如果是内存不够的原因，那就赶紧加内存吧。为了保证系统正常运行，内存不能低于2G。
-
-
