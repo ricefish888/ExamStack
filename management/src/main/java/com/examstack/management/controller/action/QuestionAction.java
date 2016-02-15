@@ -35,7 +35,7 @@ import com.google.gson.reflect.TypeToken;
 @Controller
 public class QuestionAction {
 
-	@Autowired
+    @Autowired
 	private QuestionService questionService;
 
 	/**
@@ -222,7 +222,7 @@ public class QuestionAction {
 		UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<String> filePathList = new ArrayList<String>();
 		try {
-			filePathList = FileUploadUtil.uploadFile(request, response, userInfo.getUsername());
+			filePathList = FileUploadUtil.uploadQuestionFile(request, response, userInfo.getUsername());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
