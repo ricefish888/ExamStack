@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
  */
 public class FileUploadUtil {
 
-	private static Log log = LogFactory.getLog(FileUploadUtil.class);
+    private static Log log = LogFactory.getLog(FileUploadUtil.class);
 	public static List<String> uploadFile(HttpServletRequest request, 
 			HttpServletResponse response, String username) throws FileNotFoundException{
 		List<String> filePathList = new ArrayList<String>();
@@ -64,6 +64,51 @@ public class FileUploadUtil {
 				log.info("start upload file: " + fileName);
 				FileCopyUtils.copy(mf.getBytes(), uploadFile);
 				filePathList.add(filepathUrl);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log.info("upload failed. filename: " + fileName + e.getMessage());
+				return null;
+			}
+			
+			
+		}
+		
+		return filePathList;
+	}
+	
+	public static List<String> uploadQuestionFile(HttpServletRequest request, 
+			HttpServletResponse response, String username) throws FileNotFoundException{
+		List<String> filePathList = new ArrayList<String>();
+		
+		String strPath = ",webapps,files,question," + username + ",tmp";
+		
+		String filepath = System.getProperty("catalina.base") + strPath.replace(',', File.separatorChar);
+		
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+		String fileName = null;
+		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
+
+			MultipartFile mf = entity.getValue();
+			fileName = mf.getOriginalFilename();
+			String fileType = fileName.substring(fileName.lastIndexOf('.'));
+			try {
+				//String filepathUrl = "files" + File.separatorChar + "question" + File.separatorChar + username + File.separatorChar + "tmp" + File.separatorChar + newFileName + fileType;
+				
+				File dest = new File(filepath);
+				if(!dest.exists()){
+					dest.mkdirs();
+				}
+				File uploadFile = new File(filepath + File.separatorChar + fileName);
+				if(uploadFile.exists()){
+					uploadFile.delete();
+				}
+				log.info("start upload file: " + fileName);
+				FileCopyUtils.copy(mf.getBytes(), uploadFile);
+				filePathList.add(filepath + File.separatorChar + fileName);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
