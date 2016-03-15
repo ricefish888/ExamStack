@@ -31,7 +31,7 @@ import com.google.gson.reflect.TypeToken;
 @Controller
 public class ExamPageAdmin {
 
-	@Autowired
+    @Autowired
 	private UserService userService;
 	@Autowired
 	private ExamPaperService examPaperService;
@@ -139,8 +139,8 @@ public class ExamPageAdmin {
 		if("".equals(order) || (!"desc".equals(order) && !"asc".equals(order)))
 			order = null;
 		List<ExamHistory> histList = examService.getUserExamHistListByExamId(examId, searchStr, order, limit, pageModel);
-		String pageStr = PagingUtil.getPageBtnlink(page,
-				pageModel.getTotalPage());
+		String pageStr = PagingUtil.getPagelink(page,
+				pageModel.getTotalPage(),"","admin/exam/exam-student-list/" + examId);
 		List<Group> groupList = userService.getGroupListByUserId(userInfo.getUserid(), null);
 		model.addAttribute("groupList", groupList);
 		model.addAttribute("histList", histList);
