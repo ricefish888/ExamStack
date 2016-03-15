@@ -17,7 +17,7 @@ request.setAttribute("leftMenuId",list[3]);
 
 <!DOCTYPE html>
 <html>
-	<head>
+    <head>
 		<base href="<%=basePath%>">
 		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess -->
@@ -288,7 +288,7 @@ request.setAttribute("leftMenuId",list[3]);
 	
 							</div>
 							<div id="page-link-content">
-								${pagingStr }
+								<ul class="pagination pagination-sm">${pageStr}</ul>
 							</div>
 						</div>
 					</div>
