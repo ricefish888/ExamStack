@@ -28,7 +28,7 @@ CREATE TABLE `et_comment` (
   `content_msg` mediumtext NOT NULL,
   `quoto_id` int(10) NOT NULL DEFAULT '0',
   `re_id` int(10) NOT NULL DEFAULT '0',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`),
   KEY `fk_u_id` (`user_id`),
   CONSTRAINT `et_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `et_user` (`user_id`)
@@ -347,7 +347,7 @@ CREATE TABLE `et_question` (
 -- ----------------------------
 -- Records of et_question
 -- ----------------------------
-INSERT INTO `et_question` VALUES ('1', '驾驶机动车在道路上违', '{\"title\":\"驾驶机动车在道路上违反道路交通安全法的行为，属于什么行为？\",\"titleImg\":\"\",\"choiceList\":{\"A\":\"违法行为\",\"B\":\"违章行为\",\"C\":\"违规行为\",\"D\":\"过失行为\"},\"choiceImgList\":{}}', '1', null, '0', null, '0', '2015-12-11 22:11:22', 'admin', '0000-00-00 00:00:00', 'A', '2', '1', '1', '1', '“违反道路交通安全法”，违反法律法规即为违法行为。官方已无违章/违规的说法。', '', '', '');
+INSERT INTO `et_question` VALUES ('1', '驾驶机动车在道路上违', '{\"title\":\"驾驶机动车在道路上违反道路交通安全法的行为，属于什么行为？\",\"titleImg\":\"\",\"choiceList\":{\"A\":\"违法行为\",\"B\":\"违章行为\",\"C\":\"违规行为\",\"D\":\"过失行为\"},\"choiceImgList\":{}}', '1', null, '0', null, '0', '2015-12-11 22:11:22', 'admin', CURRENT_TIMESTAMP, 'A', '2', '1', '1', '1', '“违反道路交通安全法”，违反法律法规即为违法行为。官方已无违章/违规的说法。', '', '', '');
 INSERT INTO `et_question` VALUES ('2', '机动车驾驶人违法驾驶', '{\"title\":\"机动车驾驶人违法驾驶造成重大交通事故构成犯罪的，依法追究什么责任？\",\"titleImg\":\"\",\"choiceList\":{\"A\":\"直接责任\",\"B\":\"经济责任\",\"C\":\"民事责任\",\"D\":\"刑事责任\"},\"choiceImgList\":{}}', '1', null, '0', null, '0', '2015-12-11 23:03:54', 'admin', null, 'D', '2', '1', '1', '1', '《道路交通安全法》第一百零一条：违反道路交通安全法律、法规的规定，发生重大交通事故，构成犯罪的，依法追究刑事责任，并由公安机关交通管理部门吊销机动车驾驶证。', '', '', '');
 INSERT INTO `et_question` VALUES ('3', '机动车驾驶人造成事故', '{\"title\":\"机动车驾驶人造成事故后逃逸构成犯罪的，吊销驾驶证且多长时间不得重新取得驾驶证？\",\"titleImg\":\"\",\"choiceList\":{\"A\":\"终生\",\"B\":\"10年内\",\"C\":\"5年内\",\"D\":\"20年内\"},\"choiceImgList\":{}}', '1', null, '0', null, '0', '2015-12-11 23:05:00', 'admin', null, 'A', '2', '1', '1', '1', '《道路交通安全法》第一百零一条：\n造成交通事故后逃逸的，由公安机关交通管理部门吊销机动车驾驶证，且终生不得重新取得机动车驾驶证。', '', '', '');
 INSERT INTO `et_question` VALUES ('4', '驾驶机动车违反道路交', '{\"title\":\"驾驶机动车违反道路交通安全法律法规发生交通事故属于交通违章行为。\",\"titleImg\":\"\",\"choiceList\":{},\"choiceImgList\":{}}', '3', null, '0', null, '0', '2015-12-11 23:09:10', 'admin', null, 'F', '2', '1', '1', '1', '“违反道路交通安全法”，违反法律法规即为违法行为。现在官方已无违章/违规的说法。', '', '', '');
@@ -763,7 +763,7 @@ CREATE TABLE `et_user_training_history` (
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `duration` float(11,4) NOT NULL DEFAULT '0.0000',
   `process` float(11,2) NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_state_time` timestamp NULL DEFAULT NULL,
   `user_training_detail` mediumtext,
   PRIMARY KEY (`section_id`,`user_id`),
